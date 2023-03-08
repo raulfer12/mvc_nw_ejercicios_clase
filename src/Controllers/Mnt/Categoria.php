@@ -18,6 +18,7 @@
             "general_errors"=>array(),
             "has_errors"=>false,
             "show_action"=>true,
+            "readonly"=>false,
         );
         private $modes = array(
             "DSP"=>"Detalle de %s (%s)",
@@ -94,6 +95,9 @@
                 
             }else{
                 throw new Exception{"CatEst not presented in form"};
+                if($this->viewData["mode"]!=="DEL") {
+                    throw new Exception("CatEst not present in form");
+                }
             }
             if(isset($_POST["mode"])){
                 if(!key_exists($_POST["mode"], $this->modes)){
@@ -109,7 +113,7 @@
                 if(!($this->viewData["catid"]!=="INS" && intval($_POST["catid"])>0)){
                     throw new Exception{"CatId is not valid"};    
                 }
-                if($this->viewData["catid"]!==$_POST["catid"]){
+                if($this->viewData["catid"]!==intval($_POST["catid"])){
                     throw new Exception{"catid value is diffrent from query"};
                 }   
             }else{
@@ -117,6 +121,9 @@
             }
             $this->viewData["catnom"]= $_POST["catnom"];
             $this->viewData["catest"]= $_POST["catest"];
+            if($this->viewData["mode"]!=="DEL"){
+                $this->viewData["catest"] = $_POST["catest"];
+            }
         }
         private function executeAction(){
             switch($this->viewData["mode"]){
@@ -159,25 +166,30 @@
             }
         }
         private function render(){
-            if($this->viewData["mode"]==="INS"){
-                $this->viewDta["modedsc"]=$this->modes["INS"];
-            } else{
+            if($this->viewData["mode"] === "INS") {
+                $this->viewData["modedsc"] = $this->modes["INS"];
+            } else {
                 $tmpCategorias = \Dao\Mnt\Categorias::findById($this->viewData["catid"]);
                 if(!$tmpCategorias){
-                    throw new Exception("Categoria no existe en la base de datos");
+                    throw new Exception("Categoria no existe en DB");
                 }
-                //$this->viewData["catnom"]= $tmpCategorias["catnom"];
-                //$this->viewData["catest"]= $tmpCategorias["catest"];
-                \Utilities\ArrUtils::mergeFullArrayTo($this->viewData, $tmpCategorias);
-                $this->viewData["catest_ACT"]= $this->viewData["catest"]==="ACT" ? "selected": "";
-                $this->viewData["catest_INA"]= $this->viewData["catest"]==="INA" ? "selected": "";
+                //$this->viewData["catnom"] = $tmpCategorias["catnom"];
+                //$this->viewData["catest"] = $tmpCategorias["catest"];
+                \Utilities\ArrUtils::mergeFullArrayTo($tmpCategorias, $this->viewData);
+                $this->viewData["catest_ACT"] = $this->viewData["catest"] === "ACT" ? "selected": "";
+                $this->viewData["catest_INA"] = $this->viewData["catest"] === "INA" ? "selected": "";
                 $this->viewData["modedsc"] = sprintf(
                     $this->modes[$this->viewData["mode"]],
                     $this->viewData["catnom"],
                     $this->viewData["catid"]
                 );
+                if(in_array($this->viewData["mode"], array("DSP","DEL"))){
+                    $this->viewData["readonly"] = "readonly";
+                }
+                if($this->viewData["mode"] === "DSP") {
+                    $this->viewData["show_action"] = false;
+                }
             }
-            Renderer::render("mnt/categoria",$this->viewData);
-        }
+            Renderer::render("mnt/categoria", $this->viewData);
     }
 ?>
