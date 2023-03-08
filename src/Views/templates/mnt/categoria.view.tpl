@@ -1,6 +1,6 @@
-<h1>{{mode_dsc}}</h1>
+<h1>{{modedsc}}</h1>
 <section>
-  <form action="index.php?page=mnt_categoria&mode={{mode}}&catid={{catid}}"
+  <form action="index.php?page=Mnt_Categoria&mode={{mode}}&catid={{catid}}"
     method="POST" >
     <section>
     <label for="catid">Código</label>
@@ -19,15 +19,15 @@
         <option value="PLN" {{catest_PLN}}>Planificación</option>
       </select>
     </section>
-    {{if hasErrors}}
+    {{if has_errors}}
         <section>
           <ul>
-            {{foreach aErrors}}
+            {{foreach general_errors}}
                 <li>{{this}}</li>
-            {{endfor aErrors}}
+            {{endfor general_errors}}
           </ul>
         </section>
-    {{endif hasErrors}}
+    {{endif has_errors}}
     <section>
       {{if showaction}}
       <button type="submit" name="btnGuardar" value="G">Guardar</button>
@@ -43,7 +43,7 @@
       document.getElementById("btnCancelar").addEventListener("click", function(e){
         e.preventDefault();
         e.stopPropagation();
-        window.location.assign("index.php?page=mnt_categorias");
+        window.location.assign("index.php?page=Mnt_Categorias");
       });
   });
 </script>

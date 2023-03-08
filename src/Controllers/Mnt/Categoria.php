@@ -2,6 +2,7 @@
     namespace Controllers;
 
     use Controllers\PublicController;
+    use Views\Renderer;
 
     class Categoria extends PublicController{
         private $redirectTo:"index.php?page=Mnt-categorias";
@@ -15,7 +16,8 @@
             "catest_INA"=>"",
             "catnom_error"=>"",
             "general_errors"=>array(),
-            "has_errors"=>false
+            "has_errors"=>false,
+            "show_action"=>true,
         );
         private $modes = array(
             "DSP"=>"Detalle de %s (%s)",
@@ -157,7 +159,25 @@
             }
         }
         private function render(){
-
+            if($this->viewData["mode"]==="INS"){
+                $this->viewDta["modedsc"]=$this->modes["INS"];
+            } else{
+                $tmpCategorias = \Dao\Mnt\Categorias::findById($this->viewData["catid"]);
+                if(!$tmpCategorias){
+                    throw new Exception("Categoria no existe en la base de datos");
+                }
+                //$this->viewData["catnom"]= $tmpCategorias["catnom"];
+                //$this->viewData["catest"]= $tmpCategorias["catest"];
+                \Utilities\ArrUtils::mergeFullArrayTo($this->viewData, $tmpCategorias);
+                $this->viewData["catest_ACT"]= $this->viewData["catest"]==="ACT" ? "selected": "";
+                $this->viewData["catest_INA"]= $this->viewData["catest"]==="INA" ? "selected": "";
+                $this->viewData["modedsc"] = sprintf(
+                    $this->modes[$this->viewData["mode"]],
+                    $this->viewData["catnom"],
+                    $this->viewData["catid"]
+                );
+            }
+            Renderer::render("mnt/categoria",$this->viewData);
         }
     }
 ?>
