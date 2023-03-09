@@ -19,6 +19,7 @@
             "has_errors"=>false,
             "show_action"=>true,
             "readonly"=>false,
+            "xssToken"=>""
         );
         private $modes = array(
             "DSP"=>"Detalle de %s (%s)",
@@ -38,6 +39,7 @@
             }
             $this->render();
             } catch(Exception $error) {
+                unset($_SESSION["xssToken_Mnt_Categoria"]);
                 error_log(sprintf("Controllers/Mnt/Categoria ERROR: %s", $error->getMessage));
                 \Utilities\Sites::redirectToWithMsg(
                     $redirectTo,
@@ -79,6 +81,17 @@
         }
         }
         private function validatePostData(){
+            if(isset($_POST["xssToken"])){
+                if(isset($_SESSION["xssToken_Mnt_Categoria"])){
+                    if($_POST["xssToken"]!==$_SESSION["xssToken_Mnt_Categoria"]){
+                        throw new Exception("Invalid Xss Token no match");
+                    }
+                } else {
+                    throw new Exception("Invalid Xss Token on Session");
+                }
+            }else{
+                throw new Exception("Invalid Xss Token");
+            }
             if(isset($_POST["cadnom"])){
                 if(\Utilities\Validators::IsEmpty($_POST["catnom"])){
                     $this->viewData["has_errors"]= true;
@@ -166,6 +179,9 @@
             }
         }
         private function render(){
+            $xssToken=md5("CATEGORIA". rand(0,4000)*rand(5000*9999));
+            $this->viewData["xssToken"]=$xssToken;
+            $_SESSION["xssToken_Mnt_Categoria"]=$xssToken;
             if($this->viewData["mode"] === "INS") {
                 $this->viewData["modedsc"] = $this->modes["INS"];
             } else {
