@@ -1,5 +1,5 @@
 <section class="depth-1">
-  <h1>Trabajar con Usuarios</h1>
+  <h1>Trabajar con Roles</h1>
 </section>
 <section class="WWList">
   <table >
@@ -10,42 +10,42 @@
       <th>Estado</th>
       <th>
         {{if CanInsert}}
-        <a href="index.php?page=Mnt_Usuarios1&mode=INS&id=0">Nuevo</a>
+        <a href="index.php?page=Mnt_Roles&mode=INS&id=0">Nuevo</a>
         {{endif CanInsert}}
       </th>
       </tr>
     </thead>
     <tbody>
-      {{foreach Usuarios}}
+      {{foreach Roles}}
       <tr>
-        <td>{{usercod}}</td>
+        <td>{{rolescod}}</td>
         <td>
           {{if ~CanView}}
-          <a href="index.php?page=Mnt_Usuarios1&mode=DSO&id={{usercod}}">{{useremail}}</a>
+          <a href="index.php?page=Mnt_Roles&mode=DSO&id={{rolescod}}">{{rolesdsc}}</a>
           {{endif ~CanView}}
 
           {{ifnot ~CanView}}
-              {{useremail}}
+              {{rolesdsc}}
           {{endifnot ~CanView}}
         </td>
-        <td>{{userest}}</td>
+        <td>{{rolesest}}</td>
         <td>
           {{if ~CanUpdate}}
-          <a href="index.php?page=Mnt_Usuarios1&mode=UPD&id={{usercod}}"
+          <a href="index.php?page=Mnt_Roles&mode=UPD&id={{rolescod}}"
             class="btn depth-1 w48" title="Editar">
             <i class="fas fa-edit"></i>
           </a>
           {{endif ~CanUpdate}}
           &nbsp;
           {{if ~CanDelete}}
-          <a href="index.php?page=Mnt_Usuarios1&mode=DEL&id={{usercod}}"
+          <a href="index.php?page=Mnt_Roles&mode=DEL&id={{rolescod}}"
             class="btn depth-1 w48" title="Eliminar">
             <i class="fas fa-trash-alt"></i>
           </a>
           {{endif ~CanDelete}}
         </td>
       </tr>
-      {{endfor Usuarios}}
+      {{endfor Roles}}
     </tbody>
   </table>
 </section>

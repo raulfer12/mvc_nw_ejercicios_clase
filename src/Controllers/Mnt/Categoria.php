@@ -5,7 +5,7 @@
     use Views\Renderer;
 
     class Categoria extends PublicController{
-        private $redirectTo:"index.php?page=Mnt-categorias";
+        private $redirectTo:"index.php?page=Mnt-Categorias";
         private $viewData = array(
             "mode"=> "DSP",
             "modedsc"=>"",
@@ -206,6 +206,7 @@
                     $this->viewData["show_action"] = false;
                 }
             }
-            Renderer::render("mnt/categoria", $this->viewData);
+            Renderer::render("mnt/categorias", $this->viewData);
     }
+}
 ?>

@@ -1,26 +1,26 @@
 <h1>{{modedsc}}</h1>
 <section class="row">
-  <form action="index.php?page=Mnt_Categorias&mode={{mode}}&catid={{catid}}"
+  <form action="index.php?page=Mnt_Usuarios&mode={{mode}}&usercod={{usercod}}"
     method="POST"
     class="col-6 col-3-offset"
   >
     <section class="row">
-    <label for="catid" class="col-4">Código</label>
-    <input type="hidden" id="catid" name="catid" value="{{catid}}"/>
+    <label for="usercod" class="col-4">Código</label>
+    <input type="hidden" id="usercod" name="usercod" value="{{usercod}}"/>
     <input type="hidden" id="mode" name="mode" value="{{mode}}"/>
      <input type="hidden" name="xssToken" value="{{xssToken}}"/>
-    <input type="text" readonly name="catiddummy" value="{{catid}}"/>
+    <input type="text" readonly name="usercoddummy" value="{{usercod}}"/>
     </section>
     <section class="row">
-      <label for="catnom" class="col-4">Categoría</label>
-      <input type="text" {{readonly}} name="catnom" value="{{catnom}}" maxlength="45" placeholder="Nombre de Categoría"/>
-      {{if catnom_error}}
-        <span class="error col-12">{{catnom_error}}</span>
-      {{endif catnom_error}}
+      <label for="username" class="col-4">Usuario</label>
+      <input type="text" {{readonly}} name="username" value="{{username}}" maxlength="45" placeholder="Nombre de Usuario"/>
+      {{if username_error}}
+        <span class="error col-12">{{username_error}}</span>
+      {{endif username_error}}
     </section>
     <section class="row">
-      <label for="catest" class="col-4">Estado</label>
-      <select id="catest" name="catest" {{if readonly}}disabled{{endif readonly}}>
+      <label for="userest" class="col-4">Estado</label>
+      <select id="userest" name="userest" {{if readonly}}disabled{{endif readonly}}>
         <option value="ACT" {{catest_ACT}}>Activo</option>
         <option value="INA" {{catest_INA}}>Inactivo</option>
       </select>
@@ -49,7 +49,7 @@
       document.getElementById("btnCancelar").addEventListener("click", function(e){
         e.preventDefault();
         e.stopPropagation();
-        window.location.assign("index.php?page=Mnt_Categorias");
+        window.location.assign("index.php?page=Mnt_Usuarios");
       });
   });
 </script>

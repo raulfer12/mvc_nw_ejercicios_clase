@@ -1,26 +1,26 @@
 <h1>{{modedsc}}</h1>
 <section class="row">
-  <form action="index.php?page=Mnt_Categorias&mode={{mode}}&catid={{catid}}"
+  <form action="index.php?page=Mnt_Roles&mode={{mode}}&rolescod={{rolescod}}"
     method="POST"
     class="col-6 col-3-offset"
   >
     <section class="row">
-    <label for="catid" class="col-4">Código</label>
-    <input type="hidden" id="catid" name="catid" value="{{catid}}"/>
+    <label for="rolescod" class="col-4">Código</label>
+    <input type="hidden" id="rolescod" name="rolescod" value="{{rolescod}}"/>
     <input type="hidden" id="mode" name="mode" value="{{mode}}"/>
      <input type="hidden" name="xssToken" value="{{xssToken}}"/>
-    <input type="text" readonly name="catiddummy" value="{{catid}}"/>
+    <input type="text" readonly name="rolescoddummy" value="{{rolescod}}"/>
     </section>
     <section class="row">
-      <label for="catnom" class="col-4">Categoría</label>
-      <input type="text" {{readonly}} name="catnom" value="{{catnom}}" maxlength="45" placeholder="Nombre de Categoría"/>
-      {{if catnom_error}}
-        <span class="error col-12">{{catnom_error}}</span>
-      {{endif catnom_error}}
+      <label for="rolesdsc" class="col-4">Rol</label>
+      <input type="text" {{readonly}} name="rolescod" value="{{rolescod}}" maxlength="45" placeholder="Descripcion de Rol"/>
+      {{if rolesdsc_error}}
+        <span class="error col-12">{{rolesdsc_error}}</span>
+      {{endif rolesdsc_error}}
     </section>
     <section class="row">
-      <label for="catest" class="col-4">Estado</label>
-      <select id="catest" name="catest" {{if readonly}}disabled{{endif readonly}}>
+      <label for="rolesest" class="col-4">Estado</label>
+      <select id="rolesest" name="rolesest" {{if readonly}}disabled{{endif readonly}}>
         <option value="ACT" {{catest_ACT}}>Activo</option>
         <option value="INA" {{catest_INA}}>Inactivo</option>
       </select>
@@ -49,7 +49,7 @@
       document.getElementById("btnCancelar").addEventListener("click", function(e){
         e.preventDefault();
         e.stopPropagation();
-        window.location.assign("index.php?page=Mnt_Categorias");
+        window.location.assign("index.php?page=Mnt_Roles");
       });
   });
 </script>
