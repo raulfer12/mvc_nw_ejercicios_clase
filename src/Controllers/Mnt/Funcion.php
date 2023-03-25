@@ -2,6 +2,7 @@
     namespace Controllers;
 
     use Controllers\PublicController;
+    use Exception;
     use Views\Renderer;
 
     class Funcion extends PublicController{

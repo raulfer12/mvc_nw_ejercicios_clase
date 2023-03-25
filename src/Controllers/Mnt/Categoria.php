@@ -2,6 +2,7 @@
     namespace Controllers;
 
     use Controllers\PublicController;
+    use Exception;
     use Views\Renderer;
 
     class Categoria extends PublicController{
@@ -92,7 +93,7 @@
             }else{
                 throw new Exception("Invalid Xss Token");
             }
-            if(isset($_POST["cadnom"])){
+            if(isset($_POST["catnom"])){
                 if(\Utilities\Validators::IsEmpty($_POST["catnom"])){
                     $this->viewData["has_errors"]= true;
                     $this->viewData["catnom_error"]= "El nombre no puede ir vacio!";
@@ -101,7 +102,7 @@
             } else{
                 throw new Exception{"CatNom not presented in form"};
             }
-            if(isset($_POST["cadest"])){
+            if(isset($_POST["catest"])){
                 if(!in_array($_POST["catest"],array("ACT","INA"))){
                     throw new Exception{"CatEst Inncorrect Value"};    
                 }
@@ -133,7 +134,6 @@
                 throw new Exception{"CatId not presented in form"};
             }
             $this->viewData["catnom"]= $_POST["catnom"];
-            $this->viewData["catest"]= $_POST["catest"];
             if($this->viewData["mode"]!=="DEL"){
                 $this->viewData["catest"] = $_POST["catest"];
             }
